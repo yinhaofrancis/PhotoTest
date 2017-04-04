@@ -48,6 +48,16 @@ public class Camera{
             
         }
     }
+    public var witerBlance:AVCaptureWhiteBalanceMode{
+        get{
+            return self.witerBlance
+        }
+        set{
+            self.changeDeviceSet {
+                self.witerBlance = newValue
+            }
+        }
+    }
     public var context:EAGLContext = EAGLContext(api: .openGLES2)
     
     public var torch:AVCaptureTorchMode = .auto{
