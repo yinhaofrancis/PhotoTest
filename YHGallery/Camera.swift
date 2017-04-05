@@ -105,6 +105,7 @@ public class Camera{
         session.beginConfiguration()
         session.sessionPreset = self.preset
         session.addInput(input)
+        
         session.addOutput(output)
         session.addOutput(photo)
         session.commitConfiguration()
@@ -178,6 +179,7 @@ public class Camera{
     private var Catch = CatchImage()
     private var photo:AVCaptureStillImageOutput = AVCaptureStillImageOutput()
     class CatchImage:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate{
+        
         func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
             if let sample = CMSampleBufferGetImageBuffer(sampleBuffer){
                 let c = CIImage(cvImageBuffer: sample)
@@ -185,19 +187,22 @@ public class Camera{
                     output?(img)
                 }
             }
-            
         }
+        
         var output:getFrame?
         var filter:CIFilter?
+        
     }
     private static func image(image:CIImage,filter:CIFilter?)->CIImage?{
         if let f = filter{
             f.setDefaults()
             f.setValue(image, forKey: "inputImage")
+           
             return f.outputImage
         }else{
             return image
         }
 
     }
+    
 }

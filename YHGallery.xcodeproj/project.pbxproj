@@ -17,7 +17,7 @@
 		A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCCA01E93C30C008094A1 /* Camera.swift */; };
 		A96545481E9404AD006D8283 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96545461E9404AD006D8283 /* Metal.framework */; };
 		A96545491E9404AD006D8283 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96545471E9404AD006D8283 /* MetalKit.framework */; };
-		A965454B1E941560006D8283 /* nViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965454A1E941560006D8283 /* nViewController.swift */; };
+		A99030CA1E94880400DB3702 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99030C91E94880400DB3702 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 		A93BCCA51E93F65C008094A1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A96545461E9404AD006D8283 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A96545471E9404AD006D8283 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		A965454A1E941560006D8283 /* nViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nViewController.swift; sourceTree = "<group>"; };
+		A99030C91E94880400DB3702 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,6 @@
 				A93BCC781E93C2AE008094A1 /* Assets.xcassets */,
 				A93BCC7A1E93C2AE008094A1 /* LaunchScreen.storyboard */,
 				A93BCC7D1E93C2AE008094A1 /* Info.plist */,
-				A965454A1E941560006D8283 /* nViewController.swift */,
 			);
 			path = YHGallery;
 			sourceTree = "<group>";
@@ -144,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				A93BCCA01E93C30C008094A1 /* Camera.swift */,
+				A99030C91E94880400DB3702 /* CameraViewController.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -302,7 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93BCC741E93C2AE008094A1 /* ViewController.swift in Sources */,
-				A965454B1E941560006D8283 /* nViewController.swift in Sources */,
+				A99030CA1E94880400DB3702 /* CameraViewController.swift in Sources */,
 				A93BCC721E93C2AE008094A1 /* AppDelegate.swift in Sources */,
 				A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */,
 			);
