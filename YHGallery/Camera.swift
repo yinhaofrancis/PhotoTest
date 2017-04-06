@@ -10,8 +10,6 @@ import Foundation
 import AVFoundation
 import GLKit
 
-
-
 typealias loadDevice = ()->Void
 typealias getFrame = (CIImage)->Void
 
@@ -34,14 +32,14 @@ public class Camera{
     }
     public var position:AVCaptureDevicePosition = .back{
         didSet{
-            self.device = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).filter({ (i) -> Bool in
+            self.videoDevice = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).filter({ (i) -> Bool in
                 let dev = i as! AVCaptureDevice
                 return dev.position == self.position
             })[0] as? AVCaptureDevice
             self.changeSessionSet {
-                if let input = try? AVCaptureDeviceInput(device: self.device){
-                    session.removeInput(self.input)
-                    self.input = input
+                if let input = try? AVCaptureDeviceInput(device: self.videoDevice){
+                    session.removeInput(self.videoInput)
+                    self.videoInput = input
                     session.addInput(input)
                 }
             }
@@ -63,7 +61,7 @@ public class Camera{
     public var torch:AVCaptureTorchMode = .auto{
         didSet{
             self.changeDeviceSet {
-                self.device?.torchMode = self.torch
+                self.videoDevice?.torchMode = self.torch
             }
         }
     }
@@ -71,9 +69,10 @@ public class Camera{
     public var flash:AVCaptureFlashMode = .auto{
         didSet{
             self.changeDeviceSet {
-                self.device?.flashMode = self.flash
+                self.videoDevice?.flashMode = self.flash
             }
         }
+        
     }
     
     public init?(){
@@ -82,11 +81,20 @@ public class Camera{
         switch status {
         case .authorized:
             config()
+            configVideoInput()
+            configAudio()
         default:
             AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (i) in
                 if i{
-                    self.config()
                     req = true
+                    self.config()
+                    self.configVideoInput()
+                }
+            })
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeAudio, completionHandler: { (i) in
+                if i{
+                    self.configAudio()
+                    
                 }
             })
             if !req{
@@ -95,21 +103,35 @@ public class Camera{
         }
     }
     
-    private func config(){
-        device = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).filter({ (i) -> Bool in
-            let dev = i as! AVCaptureDevice
-            return dev.position == self.position
-        })[0] as? AVCaptureDevice
-        input = try? AVCaptureDeviceInput(device: device!)
+    open func config(){
+        
+        
         output.setSampleBufferDelegate(self.Catch, queue: DispatchQueue.main)
         session.beginConfiguration()
-        session.sessionPreset = self.preset
-        session.addInput(input)
+        
         
         session.addOutput(output)
         session.addOutput(photo)
         session.commitConfiguration()
         
+    }
+    private func configVideoInput(){
+        videoDevice = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).filter({ (i) -> Bool in
+            let dev = i as! AVCaptureDevice
+            return dev.position == self.position
+        })[0] as? AVCaptureDevice
+        session.beginConfiguration()
+        videoInput = try? AVCaptureDeviceInput(device: videoDevice!)
+        session.sessionPreset = self.preset
+        session.addInput(videoInput)
+        session.commitConfiguration()
+    }
+    private func configAudio(){
+        audioDevice = AVCaptureDevice.devices(withMediaType: AVMediaTypeAudio)[0] as? AVCaptureDevice
+        audioInput = try? AVCaptureDeviceInput(device: audioDevice!)
+        session.beginConfiguration()
+        session.addInput(audioInput!)
+        session.commitConfiguration()
     }
     public func start(screenFrame:CGRect){
         let context = CIContext(eaglContext: self.context)
@@ -144,9 +166,9 @@ public class Camera{
     }
     public func changeDeviceSet(action:()->Void){
         do{
-            try self.device?.lockForConfiguration()
+            try self.videoDevice?.lockForConfiguration()
             action()
-            self.device?.unlockForConfiguration()
+            self.videoDevice?.unlockForConfiguration()
         }catch{
             
         }
@@ -173,29 +195,17 @@ public class Camera{
     public weak var view:GLKView?
 
     private let session:AVCaptureSession = AVCaptureSession()
-    private var device:AVCaptureDevice?
-    private var input:AVCaptureDeviceInput?
+    private var videoDevice:AVCaptureDevice?
+    private var audioDevice:AVCaptureDevice?
+    private var videoInput:AVCaptureDeviceInput?
+    private var audioInput:AVCaptureDeviceInput?
     private var output:AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
     private var Catch = CatchImage()
     private var photo:AVCaptureStillImageOutput = AVCaptureStillImageOutput()
-    class CatchImage:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate{
-        
-        func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-            if let sample = CMSampleBufferGetImageBuffer(sampleBuffer){
-                let c = CIImage(cvImageBuffer: sample)
-                if let img = Camera.image(image: c, filter: self.filter){
-                    output?(img)
-                }
-            }
-        }
-        
-        var output:getFrame?
-        var filter:CIFilter?
-        
-    }
-    private static func image(image:CIImage,filter:CIFilter?)->CIImage?{
+    
+    
+    public static func image(image:CIImage,filter:CIFilter?)->CIImage?{
         if let f = filter{
-            f.setDefaults()
             f.setValue(image, forKey: "inputImage")
            
             return f.outputImage
@@ -204,5 +214,20 @@ public class Camera{
         }
 
     }
+    
+}
+class CatchImage:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate{
+    
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+        if let sample = CMSampleBufferGetImageBuffer(sampleBuffer){
+            let c = CIImage(cvImageBuffer: sample)
+            if let img = Camera.image(image: c, filter: self.filter){
+                output?(img)
+            }
+        }
+    }
+    
+    var output:getFrame?
+    var filter:CIFilter?
     
 }

@@ -15,8 +15,8 @@
 		A93BCC871E93C2AE008094A1 /* YHGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCC861E93C2AE008094A1 /* YHGalleryTests.swift */; };
 		A93BCC921E93C2AE008094A1 /* YHGalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCC911E93C2AE008094A1 /* YHGalleryUITests.swift */; };
 		A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCCA01E93C30C008094A1 /* Camera.swift */; };
-		A96545481E9404AD006D8283 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96545461E9404AD006D8283 /* Metal.framework */; };
-		A96545491E9404AD006D8283 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96545471E9404AD006D8283 /* MetalKit.framework */; };
+		A979E7AC1E95F24500A6B271 /* rubbing.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = A979E7AB1E95F24500A6B271 /* rubbing.cikernel */; };
+		A979E7AE1E95F42B00A6B271 /* rubbing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A979E7AD1E95F42B00A6B271 /* rubbing.swift */; };
 		A99030CA1E94880400DB3702 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99030C91E94880400DB3702 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +56,9 @@
 		A93BCCA51E93F65C008094A1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A96545461E9404AD006D8283 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A96545471E9404AD006D8283 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		A979E7AB1E95F24500A6B271 /* rubbing.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rubbing.cikernel; sourceTree = "<group>"; };
+		A979E7AD1E95F42B00A6B271 /* rubbing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rubbing.swift; sourceTree = "<group>"; };
+		A979E7B01E96445200A6B271 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A99030C91E94880400DB3702 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,8 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A96545481E9404AD006D8283 /* Metal.framework in Frameworks */,
-				A96545491E9404AD006D8283 /* MetalKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +111,7 @@
 		A93BCC701E93C2AE008094A1 /* YHGallery */ = {
 			isa = PBXGroup;
 			children = (
+				A979E7A91E95F21D00A6B271 /* filter */,
 				A93BCC9F1E93C2F3008094A1 /* Camera */,
 				A93BCC711E93C2AE008094A1 /* AppDelegate.swift */,
 				A93BCC731E93C2AE008094A1 /* ViewController.swift */,
@@ -151,12 +153,30 @@
 		A93BCCA21E93DCA5008094A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A979E7B01E96445200A6B271 /* CoreVideo.framework */,
 				A96545461E9404AD006D8283 /* Metal.framework */,
 				A96545471E9404AD006D8283 /* MetalKit.framework */,
 				A93BCCA51E93F65C008094A1 /* OpenGLES.framework */,
 				A93BCCA31E93DCA5008094A1 /* GLKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A979E7A91E95F21D00A6B271 /* filter */ = {
+			isa = PBXGroup;
+			children = (
+				A979E7AA1E95F22C00A6B271 /* rubbing */,
+			);
+			name = filter;
+			sourceTree = "<group>";
+		};
+		A979E7AA1E95F22C00A6B271 /* rubbing */ = {
+			isa = PBXGroup;
+			children = (
+				A979E7AB1E95F24500A6B271 /* rubbing.cikernel */,
+				A979E7AD1E95F42B00A6B271 /* rubbing.swift */,
+			);
+			name = rubbing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A979E7AC1E95F24500A6B271 /* rubbing.cikernel in Resources */,
 				A93BCC7C1E93C2AE008094A1 /* LaunchScreen.storyboard in Resources */,
 				A93BCC791E93C2AE008094A1 /* Assets.xcassets in Resources */,
 				A93BCC771E93C2AE008094A1 /* Main.storyboard in Resources */,
@@ -304,6 +325,7 @@
 				A93BCC741E93C2AE008094A1 /* ViewController.swift in Sources */,
 				A99030CA1E94880400DB3702 /* CameraViewController.swift in Sources */,
 				A93BCC721E93C2AE008094A1 /* AppDelegate.swift in Sources */,
+				A979E7AE1E95F42B00A6B271 /* rubbing.swift in Sources */,
 				A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

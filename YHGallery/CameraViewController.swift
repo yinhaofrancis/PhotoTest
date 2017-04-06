@@ -73,7 +73,7 @@ public class CameraView:UIView{
         return CameraView.drawBtn(color: UIColor.white,hightlight:true)
     }()
     static func drawBtn(color:UIColor,hightlight:Bool)->UIImage?{
-        UIGraphicsBeginImageContextWithOptions(CGSize(width:60,height:60), true, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:60,height:60), false, UIScreen.main.scale)
         let ctx = UIGraphicsGetCurrentContext()
         let rect = CGRect(x: 0, y: 0, width: 60, height: 60).insetBy(dx: 4, dy: 4)
         ctx?.addEllipse(in: rect)
