@@ -7,12 +7,9 @@
 //
 
 import UIKit
-public class CustomView:UIView{
-    fileprivate lazy var isload:Bool = {
-        return true
-    }()
-}
-public class TimeAxis:CustomView {
+public typealias indicateViewDelegate = (Int)->Void
+
+public class TimeAxis:UIView {
     public init(){
         
         self.leftOffset = UIScreen.main.bounds.width / 2
@@ -41,9 +38,8 @@ public class TimeAxis:CustomView {
 // MARK:- override 
     
     public override func didMoveToWindow() {
-        self.once { [unowned self] in
+        self.once(key:"key") { [unowned self] in
             self.frame.size = self.calcSize()
-            self.isload = false
             self.backgroundColor = UIColor.white
         }
     }
@@ -60,47 +56,81 @@ public class TimeAxis:CustomView {
         context?.setLineWidth(1)
         context?.strokePath()
         let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd"
+        format.dateFormat = "yyyy年MM月dd日"
         var current:CGFloat = 0
         date.forEach { (d) in
-            let string = format.string(from: d) as NSString
-            let size = string.boundingRect(with: CGSize(width:320,height:320), options: [.truncatesLastVisibleLine,.usesDeviceMetrics], attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 12)], context: nil)
+            let string = format.string(from: d) + "日" as NSString
+            let size = string.boundingRect(with: CGSize(width:320,height:320), options: [.truncatesLastVisibleLine,.usesDeviceMetrics], attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: fontSize)], context: nil)
             context?.move(to: CGPoint(x: leftOffset + current * self.offsetWidth, y: rect.height  / 2))
             context?.addLine(to:  CGPoint(x: leftOffset + current * self.offsetWidth, y: rect.height * 3 / 4))
             context?.strokePath()
             let textFrame = CGRect(x: leftOffset + current * self.offsetWidth - size.midX, y: 0, width: size.width, height: size.height)
-            string.draw(in: textFrame, withAttributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 12)])
+            string.draw(in: textFrame, withAttributes: [NSFontAttributeName:UIFont.systemFont(ofSize: fontSize)])
             current += 1
         }
     }
+    let fontSize:CGFloat = 10
 }
-public class TimeIndicate:CustomView{
+
+
+public class TimeIndicate:UIScrollView,UIScrollViewDelegate{
     private var timeAxie:TimeAxis = TimeAxis()
-    public override func didMoveToWindow() {
-        self.once {
-            self.addSubview(self.timeAxie)
-            isload = false
+    public var data:[Date]{
+        set{
+            self.timeAxie.date = newValue
+            self.setNeedsDisplay()
         }
+        get{
+            return self.timeAxie.date
+        }
+    }
+    public override func didMoveToWindow() {
+        self.once(key: "key") {
+            self.addSubview(self.timeAxie)
+            self.showsHorizontalScrollIndicator = false
+            self.delegate = self
+            self.showsVerticalScrollIndicator = false
+        }
+    }
+    public override func layoutSubviews() {
+        self.timeAxie.frame.origin = CGPoint.zero
+        self.timeAxie.height = self.frame.height
+        self.contentSize = self.timeAxie.frame.size
+    }
+    public var index:Int{
+        set{
+            let rect = CGRect(origin: CGPoint(x: CGFloat(newValue) * self.timeAxie.offsetWidth, y: 0), size: self.frame.size)
+            self.scrollRectToVisible(rect, animated: true)
+        }
+        get{
+            return Int(round(contentOffset.x / timeAxie.offsetWidth))
+        }
+    }
+    public var indicateDelegate:indicateViewDelegate?
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let rect = CGRect(origin: CGPoint(x: round(contentOffset.x / timeAxie.offsetWidth) * timeAxie.offsetWidth, y: 0), size: self.frame.size)
+        self.scrollRectToVisible(rect, animated: true)
+        indicateDelegate?(self.index)
     }
 }
 
 extension NSObject {
-    private var flag:Bool{
+    private var flag:[String:Bool]{
         get{
-            let v = objc_getAssociatedObject(self, &association.flag) as? Bool
-            return v ?? false
+            let v = objc_getAssociatedObject(self, &association.flag) as? [String:Bool]
+            return v ?? [:]
         }
         set{
             objc_setAssociatedObject(self, &association.flag, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     fileprivate struct association{
-        static var flag:Bool = false
+        static var flag:[String:Bool] = [:]
     }
-    public func once(call:()->Void){
-        if !flag{
+    public func once(key:String,call:()->Void){
+        if flag[key] == nil{
             call()
-            flag = true
+            flag[key] = false
         }
     }
 }
