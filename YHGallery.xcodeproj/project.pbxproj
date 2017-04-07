@@ -15,6 +15,7 @@
 		A93BCC871E93C2AE008094A1 /* YHGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCC861E93C2AE008094A1 /* YHGalleryTests.swift */; };
 		A93BCC921E93C2AE008094A1 /* YHGalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCC911E93C2AE008094A1 /* YHGalleryUITests.swift */; };
 		A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93BCCA01E93C30C008094A1 /* Camera.swift */; };
+		A93E08261E9796B600D4C0B0 /* TimeIndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E08251E9796B600D4C0B0 /* TimeIndicate.swift */; };
 		A979E7AC1E95F24500A6B271 /* rubbing.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = A979E7AB1E95F24500A6B271 /* rubbing.cikernel */; };
 		A979E7AE1E95F42B00A6B271 /* rubbing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A979E7AD1E95F42B00A6B271 /* rubbing.swift */; };
 		A99030CA1E94880400DB3702 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99030C91E94880400DB3702 /* CameraViewController.swift */; };
@@ -54,6 +55,7 @@
 		A93BCCA01E93C30C008094A1 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		A93BCCA31E93DCA5008094A1 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A93BCCA51E93F65C008094A1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		A93E08251E9796B600D4C0B0 /* TimeIndicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeIndicate.swift; sourceTree = "<group>"; };
 		A96545461E9404AD006D8283 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A96545471E9404AD006D8283 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		A979E7AB1E95F24500A6B271 /* rubbing.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rubbing.cikernel; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 		A93BCC701E93C2AE008094A1 /* YHGallery */ = {
 			isa = PBXGroup;
 			children = (
+				A93E08271E9796BD00D4C0B0 /* view */,
+				A93E08241E9795E800D4C0B0 /* viewController */,
 				A979E7A91E95F21D00A6B271 /* filter */,
 				A93BCC9F1E93C2F3008094A1 /* Camera */,
 				A93BCC711E93C2AE008094A1 /* AppDelegate.swift */,
@@ -160,6 +164,21 @@
 				A93BCCA31E93DCA5008094A1 /* GLKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A93E08241E9795E800D4C0B0 /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = viewController;
+			sourceTree = "<group>";
+		};
+		A93E08271E9796BD00D4C0B0 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				A93E08251E9796B600D4C0B0 /* TimeIndicate.swift */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 		A979E7A91E95F21D00A6B271 /* filter */ = {
@@ -327,6 +346,7 @@
 				A93BCC721E93C2AE008094A1 /* AppDelegate.swift in Sources */,
 				A979E7AE1E95F42B00A6B271 /* rubbing.swift in Sources */,
 				A93BCCA11E93C30C008094A1 /* Camera.swift in Sources */,
+				A93E08261E9796B600D4C0B0 /* TimeIndicate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

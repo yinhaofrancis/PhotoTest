@@ -13,7 +13,15 @@ class ViewController: UIViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        (self.view as! CameraView).camera?.filer = rubbing()
+        let a = TimeAxis()
+        a.date = [Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date()]
+        self.view.addSubview(a)
+        self.once {
+            print("ok")
+        }
+        self.once {
+            print("ok")
+        }
     }
     
 }
