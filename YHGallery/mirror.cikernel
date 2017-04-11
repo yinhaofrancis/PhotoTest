@@ -1,0 +1,5 @@
+kernel vec2 mirror ( float imageWidth,float imageHeight)
+{
+    vec2 current = destCoord();
+    return vec2 ( imageWidth - current.x , imageHeight - current.y );
+}

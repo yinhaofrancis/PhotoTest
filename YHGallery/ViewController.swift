@@ -10,6 +10,7 @@ import UIKit
 import GLKit
 class ViewController: UIViewController {
 
+    @IBOutlet weak var indi: TimeIndicate!
      
     override func viewDidLoad() {
         super.viewDidLoad()
