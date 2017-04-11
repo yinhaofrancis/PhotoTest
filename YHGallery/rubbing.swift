@@ -10,7 +10,8 @@ import CoreImage
 public class rubbing:CIFilter{
     private var colorKernel:CIColorKernel?
     public override init() {
-        colorKernel = CIColorKernel.kernels(with: CIFilter.loadCode(name: "rubbing")!)![0] as? CIColorKernel
+        let kernels = CIColorKernel.kernels(with: CIFilter.loadCode(name: "rubbing")!)
+        colorKernel = kernels!.last as? CIColorKernel
         super.init()
     }
     public override var outputImage: CIImage?{

@@ -1,14 +1,7 @@
 kernel vec4 coreImageKernel(__sample image,float offset,float fa,__color color)
 {
     vec2 cor = samplerCoord(image);
-    vec4 c = vec4(0);
-    vec4 last = vec4(0);
-    for (float i = -offset;i< offset;i++){
-        vec4 temp = sample(image,vec2(cor.x+i,cor.y))-last;
-        last = sample(image,vec2(cor.x+i,cor.y));
-        c += temp;
-    }
-    float cha = c.x + c.y + c.z + c.w;
+    vec4 last = sample(image,cor);
     if (cha < fa){
         return color;
     }else{
