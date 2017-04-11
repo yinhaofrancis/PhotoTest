@@ -13,15 +13,10 @@ class ViewController: UIViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        let a = TimeAxis()
-        a.date = [Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date()]
-        self.view.addSubview(a)
-        self.once {
-            print("ok")
-        }
-        self.once {
-            print("ok")
-        }
+        self.glview.camera?.filer = CIFilter(name: "CIGaussianBlur")
+    }
+    var glview:CameraView{
+        return self.view as! CameraView
     }
     
 }
